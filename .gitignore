@@ -71,7 +71,7 @@ Build/*/**
 Saved/*
 
 # Content folder
-Content/*
+Content/ExternalAssets/*
 
 # Compiled source files for the engine to use
 Intermediate/*
