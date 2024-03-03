@@ -73,9 +73,6 @@ Saved/*
 # Content folder
 Content/ExternalAssets/*
 
-Content/__ExternalObjects__/*
-Content/__ExternalActors__/*
-
 # Compiled source files for the engine to use
 Intermediate/*
 Plugins/*/Intermediate/*
