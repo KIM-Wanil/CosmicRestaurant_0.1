@@ -4,6 +4,8 @@
 #include "Character/Adventure/CRAdventureCharacter.h"
 #include "EnhancedInputSubsystems.h"
 #include "EnhancedInputComponent.h"
+#include "Item/AdventureItem/CRAdventureItemBase.h"
+
 
 ACRAdventureCharacter::ACRAdventureCharacter()
 {
@@ -14,6 +16,12 @@ ACRAdventureCharacter::ACRAdventureCharacter()
 
     }*/
 }
+
+//void ACRAdventureCharacter::TakeItem(UCRAdventureItemData* InItemData)
+//{
+//	//UE_LOG(LogTemp, Log, TEXT("%d"), InItemData->Type);
+//	Inventory->GetItem(InItemData->Type);
+//}
 
 void ACRAdventureCharacter::BeginPlay()
 {
@@ -27,5 +35,52 @@ void ACRAdventureCharacter::BeginPlay()
 		{
 			Subsystem->AddMappingContext(DefaultMappingContext, 0);
 		}
+	}
+}
+
+void ACRAdventureCharacter::NotifyActorBeginOverlap(AActor* OtherActor)
+{
+	Super::NotifyActorBeginOverlap(OtherActor);
+	ACRAdventureItemBase* Item = Cast<ACRAdventureItemBase>(OtherActor);
+	if (Item)
+	{
+		UE_LOG(LogTemp, Log, TEXT("Item BeginOverlap"));
+
+		bCanGatherItem = true;
+		GatherItemType = Item->ItemData->Type;
+		GatherItem = OtherActor;
+		//UE_LOG(LogTemp, Log, TEXT("name %s"), *UEnum::GetValueAsString(bCanGatherItem));
+	}
+}
+
+void ACRAdventureCharacter::NotifyActorEndOverlap(AActor* OtherActor)
+{
+	Super::NotifyActorEndOverlap(OtherActor);
+	ACRAdventureItemBase* Item = Cast<ACRAdventureItemBase>(OtherActor);
+	if (Item)
+	{
+		UE_LOG(LogTemp, Log, TEXT("Item EndOverlap"));
+
+		bCanGatherItem = false;
+		GatherItemType = EItemType::None;
+		GatherItem = nullptr;
+		//UE_LOG(LogTemp, Log, TEXT("name %s"), *UEnum::GetValueAsString(bCanGatherItem));
+	}
+}
+
+void ACRAdventureCharacter::Interaction(const FInputActionValue& Value)
+{
+	Super::Interaction(Value);
+	//UE_LOG(LogTemp, Log, TEXT("bCanGatherItem : %s"), *UEnum::GetValueAsString(bCanGatherItem));
+	UE_LOG(LogTemp, Log, TEXT("GatherItemType : %s"), *UEnum::GetValueAsString(GatherItemType));
+
+	if (bCanGatherItem)
+	{
+		UE_LOG(LogTemp, Log, TEXT("GetItem"));
+		Inventory->GetItem(GatherItemType);
+	}
+	if (GatherItem)
+	{
+		GatherItem->Destroy();
 	}
 }
