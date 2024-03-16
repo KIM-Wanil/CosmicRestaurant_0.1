@@ -7,6 +7,7 @@
 #include "GameFramework/Character.h"
 #include "Logging/LogMacros.h"
 //#include "InputActionValue.h"
+#include "Inventory/CRInventoryComponent.h"
 #include "CRCharacterBase.generated.h"
 
 class USpringArmComponent;
@@ -58,11 +59,14 @@ class ACRCharacterBase : public ACharacter
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<class UInputAction> InteractionAction;
 
+
 protected:
 	/** MappingContext */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<class UInputMappingContext>  DefaultMappingContext;
 
+	//인벤토리 컴포넌트 추가_김완일_20240316
+	TObjectPtr<class UCRInventoryComponent> Inventory;
 public:
 	ACRCharacterBase();
 
@@ -77,7 +81,7 @@ protected:
 
 	//상호작용 키 추가_김완일_20240224
 	/** Called for interaction input */
-	void Interaction(const FInputActionValue& Value);
+	virtual void Interaction(const FInputActionValue& Value);
 
 
 protected:
