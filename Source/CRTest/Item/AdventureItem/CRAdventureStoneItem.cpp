@@ -13,11 +13,11 @@ ACRAdventureStoneItem::ACRAdventureStoneItem()
 	}
 	if (ItemData)
 	{
-		if (ItemData->ItemMesh.IsPending())
+		if (ItemData->AdventureItemMesh.IsPending())
 		{
-			ItemData->ItemMesh.LoadSynchronous();
+			ItemData->AdventureItemMesh.LoadSynchronous();
 		}
-		Mesh->SetStaticMesh(ItemData->ItemMesh.Get());
+		Mesh->SetStaticMesh(ItemData->AdventureItemMesh.Get());
 	}
 	
 }
