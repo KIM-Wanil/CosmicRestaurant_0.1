@@ -31,6 +31,6 @@ protected:
 	TObjectPtr<class UStaticMeshComponent> Mesh;
 
 public:
-	UPROPERTY(EditAnywhere, Category = Item)
+	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category = Item)
 	TObjectPtr<class UCRAdventureItemData> ItemData;
 };
