@@ -42,9 +42,18 @@ void UCRInventoryComponent::GetItem(EItemType Type)
 	if (ItemMap.Find(Type))
 	{
 		ItemMap[Type] += 1;
-		UE_LOG(LogTemp, Log, TEXT("GatherItemTypeCount : %d"), ItemMap[Type]);
+		UE_LOG(LogTemp, Log, TEXT("TakeOutItem : %d"), ItemMap[Type]);
 	}
 
 
+}
+
+void UCRInventoryComponent::TakeOutItem(EItemType Type)
+{
+	if (ItemMap.Find(Type) && ItemMap[Type] > 0)
+	{
+		ItemMap[Type] -= 1;
+		//UE_LOG(LogTemp, Log, TEXT("TakeOutItemTypeCount : %d"), ItemMap[Type]);
+	}
 }
 
