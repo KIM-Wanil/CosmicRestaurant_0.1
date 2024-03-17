@@ -66,6 +66,7 @@ protected:
 	TObjectPtr<class UInputMappingContext>  DefaultMappingContext;
 
 	//인벤토리 컴포넌트 추가_김완일_20240316
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Inventory, meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<class UCRInventoryComponent> Inventory;
 public:
 	ACRCharacterBase();
