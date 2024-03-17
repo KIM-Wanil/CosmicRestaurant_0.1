@@ -17,11 +17,19 @@ ACRAdventureItemBase::ACRAdventureItemBase()
 	Trigger = CreateDefaultSubobject<UBoxComponent>(TEXT("Trigger"));
 	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
 
+	static ConstructorHelpers::FObjectFinder<UMaterial> OutlineMaterialRef(TEXT("/Game/PCG_Test/M_OutLine.M_OutLine"));
+	if (OutlineMaterialRef.Object)
+	{
+		OutlineMaterial = OutlineMaterialRef.Object;
+	}
+
 	RootComponent = Trigger;
 	Mesh->SetupAttachment(Trigger);
 	Mesh->SetMobility(EComponentMobility::Movable);
+	Mesh->SetMaterial(1,OutlineMaterial);
 	Trigger->SetCollisionProfileName(TEXT("CRTrigger"));
 	Trigger->SetBoxExtent(FVector(40.0f, 45.0f, 30.0f));
+	Trigger->SetCollisionProfileName(TEXT("Food"));
 }
 
 // Called when the game starts or when spawned
@@ -41,5 +49,10 @@ void ACRAdventureItemBase::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+}
+
+void ACRAdventureItemBase::SetRandomCustomDepth(bool Input)
+{
+	Mesh->SetRenderCustomDepth(Input);
 }
 

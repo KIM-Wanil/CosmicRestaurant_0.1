@@ -23,6 +23,9 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	void SetRandomCustomDepth(bool Input);
+
+
 protected:
 	UPROPERTY(VisibleAnywhere, Category = Box)
 	TObjectPtr<class UBoxComponent> Trigger;
@@ -33,4 +36,6 @@ protected:
 public:
 	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category = Item)
 	TObjectPtr<class UCRAdventureItemData> ItemData;
+
+	TObjectPtr<UMaterial> OutlineMaterial;
 };
