@@ -13,7 +13,10 @@ enum class EItemType : uint8
 	Stone ,
 	Wood,
 	Meat,
-	Grass
+	Grass,
+	Apple,
+	Carrot,
+	Bread
 };
 
 UCLASS()
@@ -31,8 +34,22 @@ public:
 	EItemType Type;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Mesh)
-	TSoftObjectPtr<UStaticMesh> ItemMesh;
+	TSoftObjectPtr<UStaticMesh> AdventureItemMesh;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Mesh)
+	TSoftObjectPtr<UStaticMesh> CookingRawItemMesh;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Mesh)
+	TSoftObjectPtr<UStaticMesh> CookingBoiledItemMesh;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Mesh)
+	TSoftObjectPtr<UStaticMesh> CookingChoppedItemMesh;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Mesh)
+	TSoftObjectPtr<UStaticMesh> CookingGrilledItemMesh;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Thumbnail)
 	TObjectPtr<UTexture2D> Thumbnail;
+
+
 };
