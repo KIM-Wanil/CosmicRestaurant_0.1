@@ -25,8 +25,11 @@ public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
+	UFUNCTION(BlueprintCallable)
 	void GetItem(EItemType Type);
-
+	UFUNCTION(BlueprintCallable)
+	void TakeOutItem(EItemType Type);
 public:
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, meta = (AllowPrivateAccess = "true"), Category = Map);
 	TMap<EItemType, int32> ItemMap;
 };
