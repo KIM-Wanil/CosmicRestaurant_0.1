@@ -19,7 +19,7 @@ ACRAdventureItemBase::ACRAdventureItemBase()
 
 	RootComponent = Trigger;
 	Mesh->SetupAttachment(Trigger);
-
+	Mesh->SetMobility(EComponentMobility::Movable);
 	Trigger->SetCollisionProfileName(TEXT("CRTrigger"));
 	Trigger->SetBoxExtent(FVector(40.0f, 45.0f, 30.0f));
 }
