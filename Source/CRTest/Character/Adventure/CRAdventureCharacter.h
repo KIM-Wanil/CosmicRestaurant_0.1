@@ -5,6 +5,8 @@
 #include "CoreMinimal.h"
 #include "Character/CRCharacterBase.h"
 #include "Interface/CRCharacterItemInterface.h"
+#include "Item/AdventureItem/CRAdventureItemBase.h"
+
 #include "CRAdventureCharacter.generated.h"
 
 /**
@@ -19,15 +21,18 @@ class CRTEST_API ACRAdventureCharacter : public ACRCharacterBase//, public ICRCh
 	ACRAdventureCharacter(); 
 protected:
 	virtual void BeginPlay() override;
-
+	virtual void Tick(float DeltaTime) override;
 private:
 	virtual void NotifyActorBeginOverlap(AActor* OtherActor) override;
 	virtual void NotifyActorEndOverlap(AActor* OtherActor) override;
+
+	void TraceItemToGet();
+
 	virtual void Interaction(const FInputActionValue& Value) override;
 	//virtual void TakeItem(UCRAdventureItemData* InItemData) override;
 
 private:
 	bool bCanGatherItem;
 	EItemType GatherItemType;
-	TObjectPtr<AActor> GatherItem;
+	TObjectPtr<ACRAdventureItemBase> TracedItem;
 };

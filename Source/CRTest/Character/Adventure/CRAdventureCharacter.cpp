@@ -5,6 +5,8 @@
 #include "EnhancedInputSubsystems.h"
 #include "EnhancedInputComponent.h"
 #include "Item/AdventureItem/CRAdventureItemBase.h"
+#include "Camera/CameraComponent.h"
+#include "Kismet/KismetSystemLibrary.h"
 
 
 ACRAdventureCharacter::ACRAdventureCharacter()
@@ -15,6 +17,9 @@ ACRAdventureCharacter::ACRAdventureCharacter()
         DefaultMappingContext = MappingContextRef.Object;
 
     }*/
+	TracedItem = nullptr;
+	bCanGatherItem = false;
+	GatherItemType = EItemType::None;
 }
 
 //void ACRAdventureCharacter::TakeItem(UCRAdventureItemData* InItemData)
@@ -37,34 +42,102 @@ void ACRAdventureCharacter::BeginPlay()
 		}
 	}
 }
-
+void ACRAdventureCharacter::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+	TraceItemToGet();
+}
 void ACRAdventureCharacter::NotifyActorBeginOverlap(AActor* OtherActor)
 {
-	Super::NotifyActorBeginOverlap(OtherActor);
-	ACRAdventureItemBase* Item = Cast<ACRAdventureItemBase>(OtherActor);
-	if (Item)
-	{
-		UE_LOG(LogTemp, Log, TEXT("Item BeginOverlap"));
+	//Super::NotifyActorBeginOverlap(OtherActor);
+	//ACRAdventureItemBase* Item = Cast<ACRAdventureItemBase>(OtherActor);
+	//if (Item)
+	//{
+	//	UE_LOG(LogTemp, Log, TEXT("Item BeginOverlap"));
 
-		bCanGatherItem = true;
-		GatherItemType = Item->ItemData->Type;
-		GatherItem = OtherActor;
-		//UE_LOG(LogTemp, Log, TEXT("name %s"), *UEnum::GetValueAsString(bCanGatherItem));
-	}
+	//	bCanGatherItem = true;
+	//	GatherItemType = Item->ItemData->Type;
+	//	GatherItem = OtherActor;
+	//	Item->SetRandomCustomDepth(true);
+	//	//UE_LOG(LogTemp, Log, TEXT("name %s"), *UEnum::GetValueAsString(bCanGatherItem));
+	//}
 }
 
 void ACRAdventureCharacter::NotifyActorEndOverlap(AActor* OtherActor)
 {
-	Super::NotifyActorEndOverlap(OtherActor);
-	ACRAdventureItemBase* Item = Cast<ACRAdventureItemBase>(OtherActor);
-	if (Item)
-	{
-		UE_LOG(LogTemp, Log, TEXT("Item EndOverlap"));
+	//Super::NotifyActorEndOverlap(OtherActor);
+	//ACRAdventureItemBase* Item = Cast<ACRAdventureItemBase>(OtherActor);
+	//if (Item)
+	//{
+	//	UE_LOG(LogTemp, Log, TEXT("Item EndOverlap"));
 
-		bCanGatherItem = false;
-		GatherItemType = EItemType::None;
-		GatherItem = nullptr;
-		//UE_LOG(LogTemp, Log, TEXT("name %s"), *UEnum::GetValueAsString(bCanGatherItem));
+	//	bCanGatherItem = false;
+	//	GatherItemType = EItemType::None;
+	//	GatherItem = nullptr;
+	//	Item->SetRandomCustomDepth(false);
+
+	//	//UE_LOG(LogTemp, Log, TEXT("name %s"), *UEnum::GetValueAsString(bCanGatherItem));
+	//}
+}
+
+void ACRAdventureCharacter::TraceItemToGet()
+{
+	FVector CameraLoc = FirstPersonCameraComponent->GetComponentLocation();
+	FVector CameraForward = FirstPersonCameraComponent->GetForwardVector();
+	FVector StartLoc = CameraLoc; // 레이저 시작 지점.
+	FVector EndLoc = CameraLoc + (CameraForward * 500.0f); // 레이저 끝나는 지점.
+
+
+	TArray<TEnumAsByte<EObjectTypeQuery>> ObjectTypes; // 히트 가능한 오브젝트 유형들.
+	TEnumAsByte<EObjectTypeQuery> WorldStatic = UEngineTypes::ConvertToObjectType(ECollisionChannel::ECC_GameTraceChannel1);
+	//TEnumAsByte<EObjectTypeQuery> WorldDynamic = UEngineTypes::ConvertToObjectType(ECollisionChannel::ECC_WorldDynamic);
+	ObjectTypes.Add(WorldStatic);
+	//ObjectTypes.Add(WorldDynamic);
+
+	TArray<AActor*> IgnoreActors; // 무시할 액터들.
+
+	FHitResult HitResult; // 히트 결과 값 받을 변수.
+
+	bool Result = UKismetSystemLibrary::LineTraceSingleForObjects(
+		GetWorld(),
+		StartLoc,
+		EndLoc,
+		ObjectTypes,
+		false,
+		IgnoreActors, // 무시할 것이 없다고해도 null을 넣을 수 없다.
+		EDrawDebugTrace::ForDuration,
+		HitResult,
+		true
+		// 여기 밑에 3개는 기본 값으로 제공됨. 바꾸려면 적으면 됨.
+		//, FLinearColor::Red
+		//, FLinearColor::Green
+		//, 5.0f
+	);
+
+	if (Result == true )
+	{
+		TObjectPtr<ACRAdventureItemBase> HitItem = Cast<ACRAdventureItemBase>(HitResult.GetActor());
+		if (TracedItem != HitItem)
+		{
+			if (TracedItem != nullptr)
+			{
+				TracedItem->SetRandomCustomDepth(false);
+			}
+			TracedItem = HitItem;
+			bCanGatherItem = true;
+			GatherItemType = TracedItem->ItemData->Type;
+			TracedItem->SetRandomCustomDepth(true);
+		}
+	}
+	else
+	{
+		if (TracedItem)
+		{
+			TracedItem->SetRandomCustomDepth(false);
+			TracedItem = nullptr;	
+			bCanGatherItem = false;
+			GatherItemType = EItemType::None;
+		}
 	}
 }
 
@@ -79,8 +152,8 @@ void ACRAdventureCharacter::Interaction(const FInputActionValue& Value)
 		UE_LOG(LogTemp, Log, TEXT("GetItem"));
 		Inventory->GetItem(GatherItemType);
 	}
-	if (GatherItem)
+	if (TracedItem)
 	{
-		GatherItem->Destroy();
+		TracedItem->Destroy();
 	}
 }
