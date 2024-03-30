@@ -1,4 +1,4 @@
 ---,Recipe_Name,Recipe_Asset,1_Type,2_Type,3_Type,4_Type,1_Status,2_Status,3_Status,4_Status
-NewRow,"Example1","None","None","None","None","None","Raw","Raw","Raw","Raw"
-NewRow_0,"Example2","None","None","None","None","None","Raw","Raw","Raw","Raw"
+NewRow,"ApplePie","None","Apple","Apple","Carrot","Bread","Raw","Chopped","Raw","Raw"
+NewRow_0,"CarrotpIe","None","Apple","Carrot","Carrot","Bread","Raw","Raw","Raw","Raw"
 NewRow_1,"None","None","None","None","None","None","Raw","Raw","Raw","Raw"
