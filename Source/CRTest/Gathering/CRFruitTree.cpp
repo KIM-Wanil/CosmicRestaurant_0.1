@@ -13,7 +13,8 @@ ACRFruitTree::ACRFruitTree()
 	Volume = CreateDefaultSubobject<UBoxComponent>(TEXT("TransferVolume"));
 	RootComponent = Tree;
 	Volume->SetupAttachment(Tree);
-
+	//Volume->SetCollisionProfileName(TEXT("OverlapOnlyPawn"));
+	Volume->SetCollisionProfileName(TEXT("Food"));
 	static ConstructorHelpers::FObjectFinder<UStaticMesh> TreeMeshRef(TEXT("/Game/UsedAssets/Tree/SM_FruitTree.SM_FruitTree"));
 	if (TreeMeshRef.Object)
 	{
@@ -33,6 +34,7 @@ ACRFruitTree::ACRFruitTree()
 		{
 			TempFruit->SetStaticMesh(FruitMeshRef.Object);
 		}
+		TempFruit->SetupAttachment(Tree);
 		Fruits0.Add(TempFruit);
 	}
 	for (int i = 0; i < 3; i++)
@@ -46,6 +48,7 @@ ACRFruitTree::ACRFruitTree()
 		{
 			TempFruit->SetStaticMesh(FruitMeshRef.Object);
 		}
+		TempFruit->SetupAttachment(Tree);
 		Fruits1.Add(TempFruit);
 	}
 	for (int i = 0; i < 3; i++)
@@ -59,35 +62,41 @@ ACRFruitTree::ACRFruitTree()
 		{
 			TempFruit->SetStaticMesh(FruitMeshRef.Object);
 		}
+		TempFruit->SetupAttachment(Tree);
 		Fruits2.Add(TempFruit);
 	}
 
 
 }
 
+void ACRFruitTree::InteractCharacter()
+{
+	BeGather();
+}
+
 void ACRFruitTree::BeGather()
 {
 	if (GatheringState == 0)
 	{
-		for (UStaticMeshComponent* Fruit : Fruits0)
+		for (UStaticMeshComponent* Obj : Fruits0)
 		{
-			Destroy(Fruit);
+			Obj->DestroyComponent();
 		}
 	}
 
 	else if (GatheringState == 1)
 	{
-		for (UStaticMeshComponent* Fruit : Fruits1)
+		for (UStaticMeshComponent* Obj : Fruits1)
 		{
-			Destroy(Fruit);
+			Obj->DestroyComponent();
 		}
 	}
 
 	else if (GatheringState == 2)
 	{
-		for (UStaticMeshComponent* Fruit : Fruits2)
+		for (UStaticMeshComponent* Obj : Fruits2)
 		{
-			Destroy(Fruit);
+			Obj->DestroyComponent();
 			bCanGathering = false;
 		}
 	}

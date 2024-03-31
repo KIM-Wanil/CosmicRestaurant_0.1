@@ -12,6 +12,13 @@
 /**
  * 
  */
+UENUM()
+enum EState {
+	None = 0,
+	CanGatherItem,
+	CanShakeTree
+};
+
 UCLASS()
 class CRTEST_API ACRAdventureCharacter : public ACRCharacterBase//, public ICRCharacterItemInterface
 {
@@ -32,7 +39,9 @@ private:
 	//virtual void TakeItem(UCRAdventureItemData* InItemData) override;
 
 private:
-	bool bCanGatherItem;
+	//bool bCanGatherItem;
 	EItemType GatherItemType;
 	TObjectPtr<ACRAdventureItemBase> TracedItem;
+	ICRInteractingInterface* TracedObject;
+	EState CurrentState = EState::None;
 };

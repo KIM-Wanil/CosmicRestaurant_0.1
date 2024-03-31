@@ -4,16 +4,19 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "Interface/CRInteractingInterface.h"
 #include "CRFruitTree.generated.h"
 
 UCLASS()
-class CRTEST_API ACRFruitTree : public AActor
+class CRTEST_API ACRFruitTree : public AActor, public ICRInteractingInterface
 {
 	GENERATED_BODY()
 	
 public:	
 	// Sets default values for this actor's properties
 	ACRFruitTree();
+	virtual void InteractCharacter() override;
+	virtual EObjectType GetType() override { return Type; };
 	void BeGather();
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<class UStaticMeshComponent> Tree;
@@ -35,5 +38,5 @@ public:
 
 	int8 GatheringState = 0;
 	int8 bCanGathering = true;
-
+	enum EObjectType Type = EObjectType::Tree;
 };
