@@ -4,10 +4,11 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "Interface/CRInteractingInterface.h"
 #include "CRLevelTransferPortal.generated.h"
 
 UCLASS()
-class CRTEST_API ACRLevelTransferPortal : public AActor
+class CRTEST_API ACRLevelTransferPortal : public AActor, public ICRInteractingInterface
 {
 	GENERATED_BODY()
 	
@@ -30,12 +31,14 @@ public:
 	virtual void Tick(float DeltaTime) override;
 	FString GetTransferLevelName() { return TransferLevelName; }
 
+	virtual void InteractCharacter() override;
+	virtual EObjectType GetType() override { return Type; } ;
+
 private:
 	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = "true"))
 	FString TransferLevelName;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 	class UBoxComponent* TransferVolume;
-
-
+	enum EObjectType Type = EObjectType::Portal;
 };

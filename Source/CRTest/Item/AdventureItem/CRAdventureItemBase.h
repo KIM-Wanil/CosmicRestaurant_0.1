@@ -4,10 +4,11 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "Interface/CRInteractingInterface.h"
 #include "CRAdventureItemBase.generated.h"
 
 UCLASS()
-class CRTEST_API ACRAdventureItemBase : public AActor
+class CRTEST_API ACRAdventureItemBase : public AActor, public ICRInteractingInterface
 {
 	GENERATED_BODY()
 	
@@ -25,6 +26,8 @@ public:
 
 	void SetRandomCustomDepth(bool Input);
 
+	virtual void InteractCharacter() override;
+	virtual EObjectType GetType() override { return Type; };
 
 protected:
 	UPROPERTY(VisibleAnywhere, Category = Box)
@@ -38,4 +41,5 @@ public:
 	TObjectPtr<class UCRAdventureItemData> ItemData;
 
 	TObjectPtr<UMaterial> OutlineMaterial;
+	enum EObjectType Type = EObjectType::Item;
 };

@@ -6,6 +6,7 @@
 #include "EnhancedInputComponent.h"
 #include "Item/AdventureItem/CRAdventureItemBase.h"
 #include "Camera/CameraComponent.h"
+#include "Interface/CRInteractingInterface.h"
 #include "Kismet/KismetSystemLibrary.h"
 
 
@@ -18,7 +19,8 @@ ACRAdventureCharacter::ACRAdventureCharacter()
 
     }*/
 	TracedItem = nullptr;
-	bCanGatherItem = false;
+	//bCanGatherItem = false;
+	CurrentState = EState::None;
 	GatherItemType = EItemType::None;
 }
 
@@ -49,7 +51,7 @@ void ACRAdventureCharacter::Tick(float DeltaTime)
 }
 void ACRAdventureCharacter::NotifyActorBeginOverlap(AActor* OtherActor)
 {
-	//Super::NotifyActorBeginOverlap(OtherActor);
+	Super::NotifyActorBeginOverlap(OtherActor);
 	//ACRAdventureItemBase* Item = Cast<ACRAdventureItemBase>(OtherActor);
 	//if (Item)
 	//{
@@ -65,7 +67,7 @@ void ACRAdventureCharacter::NotifyActorBeginOverlap(AActor* OtherActor)
 
 void ACRAdventureCharacter::NotifyActorEndOverlap(AActor* OtherActor)
 {
-	//Super::NotifyActorEndOverlap(OtherActor);
+	Super::NotifyActorEndOverlap(OtherActor);
 	//ACRAdventureItemBase* Item = Cast<ACRAdventureItemBase>(OtherActor);
 	//if (Item)
 	//{
@@ -109,24 +111,35 @@ void ACRAdventureCharacter::TraceItemToGet()
 		HitResult,
 		true
 		// 여기 밑에 3개는 기본 값으로 제공됨. 바꾸려면 적으면 됨.
-		//, FLinearColor::Red
-		//, FLinearColor::Green
-		//, 5.0f
+		, FLinearColor::Red
+		, FLinearColor::Green
+		, 3.0f
 	);
-
-	if (Result == true )
+	if (Result == true)
 	{
-		TObjectPtr<ACRAdventureItemBase> HitItem = Cast<ACRAdventureItemBase>(HitResult.GetActor());
-		if (TracedItem != HitItem)
+		ICRInteractingInterface* HitObject = Cast<ICRInteractingInterface>(HitResult.GetActor());
+		TracedObject = HitObject;
+		switch(HitObject->GetType())
 		{
-			if (TracedItem != nullptr)
+		case EObjectType::Tree:
+			CurrentState = EState::CanShakeTree;
+			break;
+		case EObjectType::Item:
+
+			TObjectPtr<ACRAdventureItemBase> HitItem = Cast<ACRAdventureItemBase>(HitObject);
+			if (TracedItem != HitItem)
 			{
-				TracedItem->SetRandomCustomDepth(false);
+				if (TracedItem != nullptr)
+				{
+					TracedItem->SetRandomCustomDepth(false);
+				}
+				TracedItem = HitItem;
+				CurrentState = EState::CanGatherItem;
+				//bCanGatherItem = true;
+				GatherItemType = TracedItem->ItemData->Type;
+				TracedItem->SetRandomCustomDepth(true);
 			}
-			TracedItem = HitItem;
-			bCanGatherItem = true;
-			GatherItemType = TracedItem->ItemData->Type;
-			TracedItem->SetRandomCustomDepth(true);
+			break;
 		}
 	}
 	else
@@ -134,26 +147,59 @@ void ACRAdventureCharacter::TraceItemToGet()
 		if (TracedItem)
 		{
 			TracedItem->SetRandomCustomDepth(false);
-			TracedItem = nullptr;	
-			bCanGatherItem = false;
+			TracedItem = nullptr;
+			//bCanGatherItem = false;
+			CurrentState = EState::None;
 			GatherItemType = EItemType::None;
 		}
 	}
+	//if (Result == true )
+	//{
+	//	TObjectPtr<ACRAdventureItemBase> HitItem = Cast<ACRAdventureItemBase>(HitResult.GetActor());
+	//	if (TracedItem != HitItem)
+	//	{
+	//		if (TracedItem != nullptr)
+	//		{
+	//			TracedItem->SetRandomCustomDepth(false);
+	//		}
+	//		TracedItem = HitItem;
+	//		bCanGatherItem = true;
+	//		GatherItemType = TracedItem->ItemData->Type;
+	//		TracedItem->SetRandomCustomDepth(true);
+	//	}
+	//}
+	//else
+	//{
+	//	if (TracedItem)
+	//	{
+	//		TracedItem->SetRandomCustomDepth(false);
+	//		TracedItem = nullptr;	
+	//		bCanGatherItem = false;
+	//		GatherItemType = EItemType::None;
+	//	}
+	//}
 }
 
 void ACRAdventureCharacter::Interaction(const FInputActionValue& Value)
 {
 	Super::Interaction(Value);
-	//UE_LOG(LogTemp, Log, TEXT("bCanGatherItem : %s"), *UEnum::GetValueAsString(bCanGatherItem));
-	UE_LOG(LogTemp, Log, TEXT("GatherItemType : %s"), *UEnum::GetValueAsString(GatherItemType));
+	////UE_LOG(LogTemp, Log, TEXT("bCanGatherItem : %s"), *UEnum::GetValueAsString(bCanGatherItem));
+	//UE_LOG(LogTemp, Log, TEXT("GatherItemType : %s"), *UEnum::GetValueAsString(GatherItemType));
 
-	if (bCanGatherItem)
+	UE_LOG(LogTemp, Log, TEXT("State : %s"), *UEnum::GetValueAsString(CurrentState));
+
+	switch (CurrentState)
 	{
+	case EState::CanGatherItem:
 		UE_LOG(LogTemp, Log, TEXT("GetItem"));
 		Inventory->GetItem(GatherItemType);
-	}
-	if (TracedItem)
-	{
-		TracedItem->Destroy();
+		if (TracedItem)
+		{
+			TracedItem->Destroy();
+		}
+		break;
+	case EState::CanShakeTree:
+		TracedObject->InteractCharacter();
+		break;
 	}
 }

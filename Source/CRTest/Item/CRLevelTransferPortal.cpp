@@ -54,3 +54,7 @@ void ACRLevelTransferPortal::Tick(float DeltaTime)
 
 }
 
+void ACRLevelTransferPortal::InteractCharacter()
+{
+}
+

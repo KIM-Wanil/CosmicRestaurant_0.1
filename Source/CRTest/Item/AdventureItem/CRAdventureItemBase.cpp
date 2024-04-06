@@ -27,7 +27,7 @@ ACRAdventureItemBase::ACRAdventureItemBase()
 	Mesh->SetupAttachment(Trigger);
 	Mesh->SetMobility(EComponentMobility::Movable);
 	Mesh->SetMaterial(1,OutlineMaterial);
-	Trigger->SetCollisionProfileName(TEXT("CRTrigger"));
+	//Trigger->SetCollisionProfileName(TEXT("CRTrigger"));
 	Trigger->SetBoxExtent(FVector(40.0f, 45.0f, 30.0f));
 	Trigger->SetCollisionProfileName(TEXT("Food"));
 }
@@ -54,5 +54,9 @@ void ACRAdventureItemBase::Tick(float DeltaTime)
 void ACRAdventureItemBase::SetRandomCustomDepth(bool Input)
 {
 	Mesh->SetRenderCustomDepth(Input);
+}
+
+void ACRAdventureItemBase::InteractCharacter()
+{
 }
 
