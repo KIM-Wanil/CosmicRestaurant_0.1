@@ -13,7 +13,6 @@ ACRFruitTree::ACRFruitTree()
 	Volume = CreateDefaultSubobject<UBoxComponent>(TEXT("TransferVolume"));
 	RootComponent = Tree;
 	Volume->SetupAttachment(Tree);
-	//Volume->SetCollisionProfileName(TEXT("OverlapOnlyPawn"));
 	Volume->SetCollisionProfileName(TEXT("Food"));
 	static ConstructorHelpers::FObjectFinder<UStaticMesh> TreeMeshRef(TEXT("/Game/UsedAssets/Tree/SM_FruitTree.SM_FruitTree"));
 	if (TreeMeshRef.Object)
@@ -82,6 +81,7 @@ void ACRFruitTree::BeGather()
 		{
 			Obj->DestroyComponent();
 		}
+		GatheringState++;
 	}
 
 	else if (GatheringState == 1)
@@ -90,6 +90,7 @@ void ACRFruitTree::BeGather()
 		{
 			Obj->DestroyComponent();
 		}
+		GatheringState++;
 	}
 
 	else if (GatheringState == 2)
@@ -99,7 +100,18 @@ void ACRFruitTree::BeGather()
 			Obj->DestroyComponent();
 			bCanGathering = false;
 		}
+		GatheringState++;
 	}
+
+
+}
+
+void ACRFruitTree::SpawnApple()
+{
+	//UObject* cls = StaticLoadObject(UObject::StaticClass(), nullptr, TEXT("/Game/Blueprint/BP_Actor.BP_Actor"));
+	//UBlueprint* bp = Cast<UBlueprint>(cls);
+	//TSubclassOf<class UObject> blockBP = (UClass*)bp->GeneratedClass;
+	//GetWorld()->SpawnActor<AActor>(blockBP, FVector::ZeroVector, FRotator::ZeroRotator);
 }
 
 
