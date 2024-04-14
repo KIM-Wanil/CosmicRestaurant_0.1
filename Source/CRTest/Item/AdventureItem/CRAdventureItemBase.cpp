@@ -28,7 +28,7 @@ ACRAdventureItemBase::ACRAdventureItemBase()
 	Trigger->SetupAttachment(Mesh);
 	Mesh->SetMobility(EComponentMobility::Movable);
 	Mesh->SetMaterial(1,OutlineMaterial);
-	//Trigger->SetCollisionProfileName(TEXT("CRTrigger"));
+	Mesh->SetCollisionProfileName(TEXT("BlockAll"));
 
 	Trigger->SetCollisionProfileName(TEXT("Food"));
 }
