@@ -23,12 +23,13 @@ ACRAdventureItemBase::ACRAdventureItemBase()
 		OutlineMaterial = OutlineMaterialRef.Object;
 	}
 
-	RootComponent = Trigger;
-	Mesh->SetupAttachment(Trigger);
+	//메쉬랑 트리거 루트 바꾸기
+	RootComponent = Mesh;
+	Trigger->SetupAttachment(Mesh);
 	Mesh->SetMobility(EComponentMobility::Movable);
 	Mesh->SetMaterial(1,OutlineMaterial);
-	//Trigger->SetCollisionProfileName(TEXT("CRTrigger"));
-	Trigger->SetBoxExtent(FVector(40.0f, 45.0f, 30.0f));
+	Mesh->SetCollisionProfileName(TEXT("BlockAll"));
+
 	Trigger->SetCollisionProfileName(TEXT("Food"));
 }
 

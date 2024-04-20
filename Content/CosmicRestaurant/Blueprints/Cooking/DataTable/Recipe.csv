@@ -1,4 +1,4 @@
----,Recipe_Name,Recipe_Asset,1_Type,2_Type,3_Type,4_Type,1_Status,2_Status,3_Status,4_Status
-NewRow,"ApplePie","None","Apple","Apple","Carrot","Bread","Raw","Chopped","Raw","Raw"
-NewRow_0,"CarrotpIe","None","Apple","Carrot","Carrot","Bread","Raw","Raw","Raw","Raw"
+---,Recipe_Name,Recipe_Mesh,1_Type,2_Type,3_Type,4_Type,1_Status,2_Status,3_Status,4_Status
+NewRow,"ApplePie","/Script/Engine.StaticMesh'/Game/UsedAssets/Food_Pack_01/Meshes/Food_Bread_Boiled.Food_Bread_Boiled'","Apple","Apple","Carrot","Bread","Raw","Chopped","Raw","Raw"
+NewRow_0,"CarrotpIe","/Script/Engine.StaticMesh'/Engine/EngineMeshes/Cylinder.Cylinder'","Apple","Carrot","Carrot","Bread","Raw","Raw","Raw","Raw"
 NewRow_1,"None","None","None","None","None","None","Raw","Raw","Raw","Raw"

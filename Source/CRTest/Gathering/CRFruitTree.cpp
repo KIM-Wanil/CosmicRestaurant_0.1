@@ -3,6 +3,9 @@
 
 #include "Gathering/CRFruitTree.h"
 #include "Components/BoxComponent.h"
+#include "Item/AdventureItem/CRAdventureAppleItem.h"
+#include "Kismet/GameplayStatics.h"
+
 // Sets default values
 ACRFruitTree::ACRFruitTree()
 {
@@ -13,7 +16,6 @@ ACRFruitTree::ACRFruitTree()
 	Volume = CreateDefaultSubobject<UBoxComponent>(TEXT("TransferVolume"));
 	RootComponent = Tree;
 	Volume->SetupAttachment(Tree);
-	//Volume->SetCollisionProfileName(TEXT("OverlapOnlyPawn"));
 	Volume->SetCollisionProfileName(TEXT("Food"));
 	static ConstructorHelpers::FObjectFinder<UStaticMesh> TreeMeshRef(TEXT("/Game/UsedAssets/Tree/SM_FruitTree.SM_FruitTree"));
 	if (TreeMeshRef.Object)
@@ -76,12 +78,15 @@ void ACRFruitTree::InteractCharacter()
 
 void ACRFruitTree::BeGather()
 {
+	if (bCanGathering == false) return;
+
 	if (GatheringState == 0)
 	{
 		for (UStaticMeshComponent* Obj : Fruits0)
 		{
 			Obj->DestroyComponent();
 		}
+		SpawnApple(TEXT("SpawnLoc1"));
 	}
 
 	else if (GatheringState == 1)
@@ -90,16 +95,42 @@ void ACRFruitTree::BeGather()
 		{
 			Obj->DestroyComponent();
 		}
+		SpawnApple(TEXT("SpawnLoc2"));
 	}
-
 	else if (GatheringState == 2)
 	{
 		for (UStaticMeshComponent* Obj : Fruits2)
 		{
 			Obj->DestroyComponent();
 			bCanGathering = false;
-		}
+		}	
+		SpawnApple(TEXT("SpawnLoc3"));
 	}
+	GatheringState++;
+
+
+}
+
+void ACRFruitTree::SpawnApple(FName SocketName)
+{
+	//FString BPClassPath = TEXT("/Script/CRTest.CRAdventureAppleItem");
+	//UClass* BPClass = StaticLoadClass(UObject::StaticClass(), nullptr, *BPClassPath);
+	FVector SpawnLocation = Tree->GetSocketLocation(SocketName); // 원하는 위치로 수정하세요.
+
+	ACRAdventureAppleItem* NewActor = GetWorld()->SpawnActor<ACRAdventureAppleItem>(ACRAdventureAppleItem::StaticClass(), SpawnLocation, FRotator::ZeroRotator);
+
+	// 블루프린트 액터 스폰
+	//AActor* NewApple = GetWorld()->SpawnActor<AActor>(NewActor, RootComponent->GetSocketLocation(SocketName), FRotator::ZeroRotator);
+	//if (NewActor)
+	//{
+	//	// 액터를 레벨에 추가
+	//	UGameplayStatics::FinishSpawningActor(NewActor, FTransform(SpawnLocation));
+	//}
+	//UObject* cls = StaticLoadObject(UObject::StaticClass(), nullptr, TEXT("/Game/Blueprint/BP_Actor.BP_Actor"));
+	//UBlueprint* bp = Cast<UBlueprint>(cls);
+	//TSubclassOf<class UObject> blockBP = (UClass*)bp->GeneratedClass;
+	//GetWorld()->SpawnActor<AActor>(blockBP, FVector::ZeroVector, FRotator::ZeroRotator);
+	//ACRAdventureAppleItem* NewActor = GetWorld()->SpawnActor<ACRAdventureAppleItem>(ACRAdventureAppleItem::StaticClass(), RootComponent->GetSocketLocation("") , FRotator::ZeroRotator);
 }
 
 

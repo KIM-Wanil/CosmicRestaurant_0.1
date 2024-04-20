@@ -113,7 +113,7 @@ void ACRAdventureCharacter::TraceItemToGet()
 		// 여기 밑에 3개는 기본 값으로 제공됨. 바꾸려면 적으면 됨.
 		, FLinearColor::Red
 		, FLinearColor::Green
-		, 3.0f
+		, 0.0f
 	);
 	if (Result == true)
 	{
