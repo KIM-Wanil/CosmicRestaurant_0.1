@@ -18,6 +18,7 @@ public:
 	virtual void InteractCharacter() override;
 	virtual EObjectType GetType() override { return Type; };
 	void BeGather();
+	void SpawnApple(FName SocketName);
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<class UStaticMeshComponent> Tree;
 
