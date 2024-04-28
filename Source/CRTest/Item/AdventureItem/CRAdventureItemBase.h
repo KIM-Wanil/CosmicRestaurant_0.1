@@ -30,10 +30,10 @@ public:
 	virtual EObjectType GetType() override { return Type; };
 
 protected:
-	UPROPERTY(VisibleAnywhere, Category = Box)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Trigger)
 	TObjectPtr<class UBoxComponent> Trigger;
 
-	UPROPERTY(VisibleAnywhere, Category = Box)
+	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category = Mesh)
 	TObjectPtr<class UStaticMeshComponent> Mesh;
 
 public:

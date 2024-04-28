@@ -191,12 +191,12 @@ void ACRAdventureCharacter::Interaction(const FInputActionValue& Value)
 	switch (CurrentState)
 	{
 	case EState::CanGatherItem:
-		UE_LOG(LogTemp, Log, TEXT("GetItem"));
+		/*UE_LOG(LogTemp, Log, TEXT("GetItem"));
 		Inventory->GetItem(GatherItemType);
 		if (TracedItem)
 		{
 			TracedItem->Destroy();
-		}
+		}*/
 		break;
 	case EState::CanShakeTree:
 		TracedObject->InteractCharacter();

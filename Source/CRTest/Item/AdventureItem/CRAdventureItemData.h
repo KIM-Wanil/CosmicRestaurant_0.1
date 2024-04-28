@@ -51,8 +51,8 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Mesh)
 	TSoftObjectPtr<UStaticMesh> CookingBurnedItemMesh;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Thumbnail)
-	TObjectPtr<UTexture2D> Thumbnail;
+	//UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Thumbnail)
+	//TObjectPtr<UTexture2D> Thumbnail;
 
 
 };
