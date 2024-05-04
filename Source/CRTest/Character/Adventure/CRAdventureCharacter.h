@@ -12,8 +12,8 @@
 /**
  * 
  */
-UENUM()
-enum EState {
+UENUM(BlueprintType)
+enum class EState : uint8{
 	None = 0,
 	CanGatherItem,
 	CanShakeTree
@@ -38,10 +38,20 @@ private:
 	virtual void Interaction(const FInputActionValue& Value) override;
 	//virtual void TakeItem(UCRAdventureItemData* InItemData) override;
 
-private:
+public:
 	//bool bCanGatherItem;
-	EItemType GatherItemType;
+	//UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = Type)
+	//EItemType GatherItemType;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = ItemID)
+	FName ItemID;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = TracedItem)
 	TObjectPtr<ACRAdventureItemBase> TracedItem;
+
+	//UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = TracedObject)
 	ICRInteractingInterface* TracedObject;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = State)
 	EState CurrentState = EState::None;
 };

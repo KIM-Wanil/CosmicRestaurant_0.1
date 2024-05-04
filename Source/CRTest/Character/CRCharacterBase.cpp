@@ -79,7 +79,7 @@ ACRCharacterBase::ACRCharacterBase()
 		InteractionAction = InputActionInteractionRef.Object;
 	}
 
-	Inventory = CreateDefaultSubobject<UCRInventoryComponent>(TEXT("Inventory"));
+	//Inventory = CreateDefaultSubobject<UCRInventoryComponent>(TEXT("Inventory"));
 
 }
 

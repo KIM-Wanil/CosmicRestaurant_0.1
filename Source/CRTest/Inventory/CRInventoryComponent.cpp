@@ -19,13 +19,7 @@ void UCRInventoryComponent::BeginPlay()
 {
 	Super::BeginPlay();
 
-	ItemMap.Add(EItemType::Stone, 0);
-	ItemMap.Add(EItemType::Grass, 0);
-	ItemMap.Add(EItemType::Wood, 0);
-	ItemMap.Add(EItemType::Meat, 0);
-	ItemMap.Add(EItemType::Carrot, 0);
-	ItemMap.Add(EItemType::Apple, 0);
-	ItemMap.Add(EItemType::Bread, 0);
+
 
 	// ...
 	
