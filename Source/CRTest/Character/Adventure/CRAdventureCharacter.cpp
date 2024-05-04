@@ -21,7 +21,7 @@ ACRAdventureCharacter::ACRAdventureCharacter()
 	TracedItem = nullptr;
 	//bCanGatherItem = false;
 	CurrentState = EState::None;
-	GatherItemType = EItemType::None;
+	//GatherItemType = EItemType::None;
 }
 
 //void ACRAdventureCharacter::TakeItem(UCRAdventureItemData* InItemData)
@@ -136,7 +136,7 @@ void ACRAdventureCharacter::TraceItemToGet()
 				TracedItem = HitItem;
 				CurrentState = EState::CanGatherItem;
 				//bCanGatherItem = true;
-				GatherItemType = TracedItem->ItemData->Type;
+				//GatherItemType = TracedItem->ItemData->Type;
 				TracedItem->SetRandomCustomDepth(true);
 			}
 			break;
@@ -150,7 +150,7 @@ void ACRAdventureCharacter::TraceItemToGet()
 			TracedItem = nullptr;
 			//bCanGatherItem = false;
 			CurrentState = EState::None;
-			GatherItemType = EItemType::None;
+			//GatherItemType = EItemType::None;
 		}
 	}
 	//if (Result == true )

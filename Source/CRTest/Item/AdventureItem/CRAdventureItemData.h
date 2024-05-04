@@ -11,12 +11,14 @@ enum class EItemType : uint8
 {
 	None = 0,
 	Stone ,
-	Wood,
+	Branch,
+	Water,
+	Oil,
+	Fruit,
+	Bone,
+	Fish,
 	Meat,
-	Grass,
-	Apple,
-	Carrot,
-	Bread
+	Mushroom
 };
 
 UCLASS()

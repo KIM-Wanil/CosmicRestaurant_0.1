@@ -40,8 +40,8 @@ private:
 
 public:
 	//bool bCanGatherItem;
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = Type)
-	EItemType GatherItemType;
+	//UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = Type)
+	//EItemType GatherItemType;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = ItemID)
 	FName ItemID;

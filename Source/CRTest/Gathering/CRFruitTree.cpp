@@ -86,7 +86,7 @@ void ACRFruitTree::BeGather()
 		{
 			Obj->DestroyComponent();
 		}
-		SpawnApple(TEXT("SpawnLoc1"));
+		SpawnFruit(TEXT("SpawnLoc1"));
 	}
 
 	else if (GatheringState == 1)
@@ -95,7 +95,7 @@ void ACRFruitTree::BeGather()
 		{
 			Obj->DestroyComponent();
 		}
-		SpawnApple(TEXT("SpawnLoc2"));
+		SpawnFruit(TEXT("SpawnLoc2"));
 	}
 	else if (GatheringState == 2)
 	{
@@ -104,33 +104,36 @@ void ACRFruitTree::BeGather()
 			Obj->DestroyComponent();
 			bCanGathering = false;
 		}	
-		SpawnApple(TEXT("SpawnLoc3"));
+		SpawnFruit(TEXT("SpawnLoc3"));
 	}
 	GatheringState++;
 
 
 }
 
-void ACRFruitTree::SpawnApple(FName SocketName)
+void ACRFruitTree::SpawnFruit(FName SocketName)
 {
 	//FString BPClassPath = TEXT("/Script/CRTest.CRAdventureAppleItem");
 	//UClass* BPClass = StaticLoadClass(UObject::StaticClass(), nullptr, *BPClassPath);
+
+
 	FVector SpawnLocation = Tree->GetSocketLocation(SocketName); // 원하는 위치로 수정하세요.
+	//ACRAdventureAppleItem* NewActor = GetWorld()->SpawnActor<ACRAdventureAppleItem>(ACRAdventureAppleItem::StaticClass(), SpawnLocation, FRotator::ZeroRotator);
 
-	ACRAdventureAppleItem* NewActor = GetWorld()->SpawnActor<ACRAdventureAppleItem>(ACRAdventureAppleItem::StaticClass(), SpawnLocation, FRotator::ZeroRotator);
 
-	// 블루프린트 액터 스폰
-	//AActor* NewApple = GetWorld()->SpawnActor<AActor>(NewActor, RootComponent->GetSocketLocation(SocketName), FRotator::ZeroRotator);
-	//if (NewActor)
-	//{
-	//	// 액터를 레벨에 추가
-	//	UGameplayStatics::FinishSpawningActor(NewActor, FTransform(SpawnLocation));
-	//}
-	//UObject* cls = StaticLoadObject(UObject::StaticClass(), nullptr, TEXT("/Game/Blueprint/BP_Actor.BP_Actor"));
+	//UObject* cls = StaticLoadObject(UObject::StaticClass(), nullptr, TEXT("/Game/CosmicRestaurant/Blueprints/Item/BP_CRAdventureFruitItem.BP_CRAdventureFruitItem"));
 	//UBlueprint* bp = Cast<UBlueprint>(cls);
 	//TSubclassOf<class UObject> blockBP = (UClass*)bp->GeneratedClass;
-	//GetWorld()->SpawnActor<AActor>(blockBP, FVector::ZeroVector, FRotator::ZeroRotator);
-	//ACRAdventureAppleItem* NewActor = GetWorld()->SpawnActor<ACRAdventureAppleItem>(ACRAdventureAppleItem::StaticClass(), RootComponent->GetSocketLocation("") , FRotator::ZeroRotator);
+	//GetWorld()->SpawnActor<AActor>(blockBP, SpawnLocation, FRotator::ZeroRotator);
+
+
+
+	TSubclassOf<AActor> BlueprintFruitItem = LoadClass<AActor>(nullptr, TEXT("/Game/CosmicRestaurant/Blueprints/Item/BP_CRAdventureFruitItem.BP_CRAdventureFruitItem_C"));
+	if (BlueprintFruitItem)
+	{
+		AActor* SpawnedActor = GetWorld()->SpawnActor<AActor>(BlueprintFruitItem, SpawnLocation, FRotator::ZeroRotator);
+	}
+
 }
 
 
