@@ -27,6 +27,16 @@ float ACRAdeventureMonster::GetAITurnSpeed()
 	return 100.0f;
 }
 
+float ACRAdeventureMonster::GetAIWalkSpeed()
+{
+	return 80.0f;
+}
+
+float ACRAdeventureMonster::GetAIRunSpeed()
+{
+	return 600.0f;
+}
+
 //// Called when the game starts or when spawned
 //void ACRAdeventureMonster::BeginPlay()
 //{

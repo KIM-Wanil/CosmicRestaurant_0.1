@@ -3,6 +3,8 @@
 
 #include "AI/BTService_Detect.h"
 #include "AIController.h"
+#include "GameFramework/Character.h"
+#include "GameFramework/CharacterMovementComponent.h"
 #include "Interface/CRCharacterAIInterface.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "DrawDebugHelpers.h"
@@ -20,6 +22,12 @@ void UBTService_Detect::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* NodeM
 
 	APawn* ControllingPawn = OwnerComp.GetAIOwner()->GetPawn();
 	if (nullptr == ControllingPawn)
+	{
+		return;
+	}
+
+	ACharacter* ControllingCharacter = Cast<ACharacter>(ControllingPawn);
+	if (nullptr == ControllingCharacter)
 	{
 		return;
 	}
@@ -80,11 +88,17 @@ void UBTService_Detect::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* NodeM
 				{
 					DrawDebugLine(World, FootPos, FootPos + ToPlayer * AIPawn->GetAIDetectRange(), FColor::Green, false, 3, 0, 1);
 					OwnerComp.GetBlackboardComponent()->SetValueAsObject(TEXT("Target"), Pawn);
+
+					ControllingCharacter->GetCharacterMovement()->MaxWalkSpeed = AIPawn->GetAIRunSpeed();
+					//OwnerComp.GetBlackboardComponent()->SetValueAsFloat(TEXT("Speed"), AIPawn->GetAIRunSpeed());
 					return;
 				}
 			}
 		}
 	}
-	OwnerComp.GetBlackboardComponent()->SetValueAsObject(TEXT("Target"), nullptr);
 
+	OwnerComp.GetBlackboardComponent()->SetValueAsObject(TEXT("Target"), nullptr);
+	ControllingCharacter->GetCharacterMovement()->MaxWalkSpeed = AIPawn->GetAIWalkSpeed();
+	//OwnerComp.GetBlackboardComponent()->SetValueAsFloat(TEXT("Speed"), 20.0f);
+	//OwnerComp.GetBlackboardComponent()->SetValueAsFloat(TEXT("Speed"), AIPawn->GetAIWalkSpeed());
 }
