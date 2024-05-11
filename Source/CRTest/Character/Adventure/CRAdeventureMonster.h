@@ -15,9 +15,17 @@ class CRTEST_API ACRAdeventureMonster : public ACharacter, public ICRCharacterAI
 public:
 	// Sets default values for this character's properties
 	ACRAdeventureMonster();
+
+	UFUNCTION(BlueprintCallable)
 	virtual float GetAIPatrolRadius() override;
+	UFUNCTION(BlueprintCallable)
 	virtual float GetAIDetectRange() override;
+	UFUNCTION(BlueprintCallable)
 	virtual float GetAITurnSpeed() override;
+	UFUNCTION(BlueprintCallable)
+	virtual float GetAIWalkSpeed() override;
+	UFUNCTION(BlueprintCallable)
+	virtual float GetAIRunSpeed() override;
 //protected:
 //	// Called when the game starts or when spawned
 //	virtual void BeginPlay() override;
