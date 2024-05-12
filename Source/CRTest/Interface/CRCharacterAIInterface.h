@@ -25,4 +25,6 @@ public:
 	virtual float GetAIPatrolRadius() = 0;
 	virtual float GetAIDetectRange() = 0;
 	virtual float GetAITurnSpeed() = 0;
+	virtual float GetAIWalkSpeed() = 0;
+	virtual float GetAIRunSpeed() = 0;
 };
