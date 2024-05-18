@@ -25,7 +25,7 @@ ACRFruitTree::ACRFruitTree()
 
 	static ConstructorHelpers::FObjectFinder<UStaticMesh> FruitMeshRef(TEXT("/Game/UsedAssets/Food_Pack_01/Meshes/Food_Fruit_Apple_01.Food_Fruit_Apple_01"));
 
-	for (int i = 0; i < 3; i++)
+	for (int i = 0; i < 1; i++)
 	{
 		TObjectPtr<UStaticMeshComponent> TempFruit;
 
@@ -39,7 +39,7 @@ ACRFruitTree::ACRFruitTree()
 		TempFruit->SetupAttachment(Tree);
 		Fruits0.Add(TempFruit);
 	}
-	for (int i = 0; i < 3; i++)
+	for (int i = 0; i < 1; i++)
 	{
 		TObjectPtr<UStaticMeshComponent> TempFruit;
 
@@ -53,7 +53,7 @@ ACRFruitTree::ACRFruitTree()
 		TempFruit->SetupAttachment(Tree);
 		Fruits1.Add(TempFruit);
 	}
-	for (int i = 0; i < 3; i++)
+	for (int i = 0; i < 1; i++)
 	{
 		TObjectPtr<UStaticMeshComponent> TempFruit;
 
