@@ -25,7 +25,7 @@ ACRFruitTree::ACRFruitTree()
 
 	static ConstructorHelpers::FObjectFinder<UStaticMesh> FruitMeshRef(TEXT("/Game/UsedAssets/Food_Pack_01/Meshes/Food_Fruit_Apple_01.Food_Fruit_Apple_01"));
 
-	for (int i = 0; i < 3; i++)
+	for (int i = 0; i < 1; i++)
 	{
 		TObjectPtr<UStaticMeshComponent> TempFruit;
 
@@ -39,7 +39,7 @@ ACRFruitTree::ACRFruitTree()
 		TempFruit->SetupAttachment(Tree);
 		Fruits0.Add(TempFruit);
 	}
-	for (int i = 0; i < 3; i++)
+	for (int i = 0; i < 1; i++)
 	{
 		TObjectPtr<UStaticMeshComponent> TempFruit;
 
@@ -53,7 +53,7 @@ ACRFruitTree::ACRFruitTree()
 		TempFruit->SetupAttachment(Tree);
 		Fruits1.Add(TempFruit);
 	}
-	for (int i = 0; i < 3; i++)
+	for (int i = 0; i < 1; i++)
 	{
 		TObjectPtr<UStaticMeshComponent> TempFruit;
 
@@ -82,28 +82,33 @@ void ACRFruitTree::BeGather()
 
 	if (GatheringState == 0)
 	{
-		for (UStaticMeshComponent* Obj : Fruits0)
-		{
-			Obj->DestroyComponent();
-		}
+		//for (UStaticMeshComponent* Obj : Fruits0)
+		//{
+		//	Obj->DestroyComponent();
+		//}
+		Fruits0[0]->DestroyComponent();
 		SpawnFruit(TEXT("SpawnLoc1"));
 	}
 
 	else if (GatheringState == 1)
 	{
-		for (UStaticMeshComponent* Obj : Fruits1)
-		{
-			Obj->DestroyComponent();
-		}
+		//for (UStaticMeshComponent* Obj : Fruits1)
+		//{
+		//	Obj->DestroyComponent();
+		//}
+		Fruits1[0]->DestroyComponent();
+
 		SpawnFruit(TEXT("SpawnLoc2"));
 	}
 	else if (GatheringState == 2)
 	{
-		for (UStaticMeshComponent* Obj : Fruits2)
-		{
-			Obj->DestroyComponent();
-			bCanGathering = false;
-		}	
+		//for (UStaticMeshComponent* Obj : Fruits2)
+		//{
+		//	Obj->DestroyComponent();
+		//	bCanGathering = false;
+		//}	
+		Fruits2[0]->DestroyComponent();
+
 		SpawnFruit(TEXT("SpawnLoc3"));
 	}
 	GatheringState++;
