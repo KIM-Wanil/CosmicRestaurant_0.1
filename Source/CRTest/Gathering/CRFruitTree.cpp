@@ -82,28 +82,33 @@ void ACRFruitTree::BeGather()
 
 	if (GatheringState == 0)
 	{
-		for (UStaticMeshComponent* Obj : Fruits0)
-		{
-			Obj->DestroyComponent();
-		}
+		//for (UStaticMeshComponent* Obj : Fruits0)
+		//{
+		//	Obj->DestroyComponent();
+		//}
+		Fruits0[0]->DestroyComponent();
 		SpawnFruit(TEXT("SpawnLoc1"));
 	}
 
 	else if (GatheringState == 1)
 	{
-		for (UStaticMeshComponent* Obj : Fruits1)
-		{
-			Obj->DestroyComponent();
-		}
+		//for (UStaticMeshComponent* Obj : Fruits1)
+		//{
+		//	Obj->DestroyComponent();
+		//}
+		Fruits1[0]->DestroyComponent();
+
 		SpawnFruit(TEXT("SpawnLoc2"));
 	}
 	else if (GatheringState == 2)
 	{
-		for (UStaticMeshComponent* Obj : Fruits2)
-		{
-			Obj->DestroyComponent();
-			bCanGathering = false;
-		}	
+		//for (UStaticMeshComponent* Obj : Fruits2)
+		//{
+		//	Obj->DestroyComponent();
+		//	bCanGathering = false;
+		//}	
+		Fruits2[0]->DestroyComponent();
+
 		SpawnFruit(TEXT("SpawnLoc3"));
 	}
 	GatheringState++;
