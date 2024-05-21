@@ -7,7 +7,7 @@
 // Sets default values
 ACRAdeventureMonster::ACRAdeventureMonster()
 {
-	AIControllerClass = ACRAIController::StaticClass();
+	//AIControllerClass = ACRAIController::StaticClass();
 	AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned;
 
 }
