@@ -8,17 +8,17 @@
 
 ACRAIController::ACRAIController()
 {
-	//static ConstructorHelpers::FObjectFinder<UBlackboardData> BBAssetRef(TEXT("/Game/CosmicRestaurant/Blueprints/Adventure/MonstersAI/BB_CRAdeventureMonster.BB_CRAdeventureMonster"));
-	//if (BBAssetRef.Object)
-	//{
-	//	BBAsset = BBAssetRef.Object;
-	//}
+	static ConstructorHelpers::FObjectFinder<UBlackboardData> BBAssetRef(TEXT("/Game/CosmicRestaurant/Blueprints/Adventure/MonstersAI/BB_CRAdeventureMonster.BB_CRAdeventureMonster"));
+	if (BBAssetRef.Object)
+	{
+		BBAsset = BBAssetRef.Object;
+	}
 
-	//static ConstructorHelpers::FObjectFinder<UBehaviorTree> BTAssetRef(TEXT("/Game/CosmicRestaurant/Blueprints/Adventure/MonstersAI/BT_CRAdventureMonster.BT_CRAdventureMonster"));
-	//if (BTAssetRef.Object)
-	//{
-	//	BTAsset = BTAssetRef.Object;
-	//}
+	static ConstructorHelpers::FObjectFinder<UBehaviorTree> BTAssetRef(TEXT("/Game/CosmicRestaurant/Blueprints/Adventure/MonstersAI/BT_CRAdventureMonster.BT_CRAdventureMonster"));
+	if (BTAssetRef.Object)
+	{
+		BTAsset = BTAssetRef.Object;
+	}
 }
 
 void ACRAIController::RunAI()

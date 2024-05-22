@@ -23,8 +23,8 @@ public:
 protected:
 	virtual void OnPossess(APawn* InPawn) override;
 private:
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category=AI , meta = (AllowPrivateAccess = "true"))
+	UPROPERTY()
 	TObjectPtr<class UBlackboardData> BBAsset;
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = AI, meta = (AllowPrivateAccess = "true"))
+	UPROPERTY()
 	TObjectPtr<class UBehaviorTree> BTAsset;
 };
