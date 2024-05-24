@@ -58,9 +58,6 @@ void UBTService_Detect::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* NodeM
 	);
 
 	FVector FootPos = ControllingPawn->GetActorLocation() - FVector(0.0f,0.0f, ControllingPawn->GetActorScale3D().Z/2.0f);
-	DrawDebugSphere(World, FootPos, AIPawn->GetAIDetectRange(), 26, FColor::Blue, false , 3, 0, 1);
-	DrawDebugLine(World, FootPos, FootPos + ControllingPawn->GetActorForwardVector().RotateAngleAxis(-45.0f, FVector::UpVector) * AIPawn->GetAIDetectRange(), FColor::Red, false, 3, 0, 1);
-	DrawDebugLine(World, FootPos, FootPos + ControllingPawn->GetActorForwardVector().RotateAngleAxis(45.0f, FVector::UpVector) * AIPawn->GetAIDetectRange(), FColor::Red, false, 3, 0, 1);
 
 	if (bResult)
 	{
@@ -86,19 +83,13 @@ void UBTService_Detect::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* NodeM
 
 				if (abs(AngleDegree) <= 45.0f)
 				{
-					DrawDebugLine(World, FootPos, FootPos + ToPlayer * AIPawn->GetAIDetectRange(), FColor::Green, false, 3, 0, 1);
 					OwnerComp.GetBlackboardComponent()->SetValueAsObject(TEXT("Target"), Pawn);
-
 					ControllingCharacter->GetCharacterMovement()->MaxWalkSpeed = AIPawn->GetAIRunSpeed();
-					//OwnerComp.GetBlackboardComponent()->SetValueAsFloat(TEXT("Speed"), AIPawn->GetAIRunSpeed());
 					return;
 				}
 			}
 		}
 	}
-
 	OwnerComp.GetBlackboardComponent()->SetValueAsObject(TEXT("Target"), nullptr);
 	ControllingCharacter->GetCharacterMovement()->MaxWalkSpeed = AIPawn->GetAIWalkSpeed();
-	//OwnerComp.GetBlackboardComponent()->SetValueAsFloat(TEXT("Speed"), 20.0f);
-	//OwnerComp.GetBlackboardComponent()->SetValueAsFloat(TEXT("Speed"), AIPawn->GetAIWalkSpeed());
 }
