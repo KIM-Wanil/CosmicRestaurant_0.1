@@ -54,4 +54,12 @@ public:
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = State)
 	EState CurrentState = EState::None;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = State)
+	bool bIsHold = false;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = State)
+	bool bIsRun = false;
+
+
 };
