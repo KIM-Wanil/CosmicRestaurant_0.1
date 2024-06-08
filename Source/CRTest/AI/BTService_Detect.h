@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "BehaviorTree/BTService.h"
+#include "Character/Adventure/CRAdventureCharacter.h"
 #include "BTService_Detect.generated.h"
 
 /**
@@ -19,4 +20,6 @@ public:
 protected:
 
 	virtual void TickNode(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds) override;
+
+	TSubclassOf<ACRAdventureCharacter> PlayerRef;
 };
