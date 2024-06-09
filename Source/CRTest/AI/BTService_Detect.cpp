@@ -9,6 +9,7 @@
 #include "BehaviorTree/BlackboardComponent.h"
 #include "DrawDebugHelpers.h"
 
+
 UBTService_Detect::UBTService_Detect()
 {
 	NodeName = TEXT("Detect");
@@ -21,6 +22,7 @@ void UBTService_Detect::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* NodeM
 	Super::TickNode(OwnerComp, NodeMemory, DeltaSeconds);
 
 	APawn* ControllingPawn = OwnerComp.GetAIOwner()->GetPawn();
+	
 	if (nullptr == ControllingPawn)
 	{
 		return;
@@ -61,12 +63,15 @@ void UBTService_Detect::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* NodeM
 
 	if (bResult)
 	{
-
+		
 		for (auto OverlapResult : OverlapResults)
 		{
 			APawn* Pawn = Cast<APawn>(OverlapResult.GetActor());
 			if (Pawn && Pawn->GetController()->IsPlayerController())
 			{
+				//PlayerRef Player = Cast<PlayerRef>(OverlapResult.GetActor());
+
+				ACRAdventureCharacter* Player = Cast<ACRAdventureCharacter>(OverlapResult.GetActor());
 
 				FVector Forward = ControllingPawn->GetActorForwardVector();
 				Forward.Z = 0.0f;
@@ -81,7 +86,7 @@ void UBTService_Detect::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* NodeM
 
 
 
-				if (abs(AngleDegree) <= 45.0f)
+				if (abs(AngleDegree) <= 45.0f || Player->bIsHold || Player->bIsRun)
 				{
 					OwnerComp.GetBlackboardComponent()->SetValueAsObject(TEXT("Target"), Pawn);
 					ControllingCharacter->GetCharacterMovement()->MaxWalkSpeed = AIPawn->GetAIRunSpeed();

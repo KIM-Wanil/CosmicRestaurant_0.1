@@ -19,7 +19,7 @@ float ACRAdeventureMonster::GetAIPatrolRadius()
 
 float ACRAdeventureMonster::GetAIDetectRange()
 {
-	return 2000.0f;
+	return 2200.0f;
 }
 
 float ACRAdeventureMonster::GetAITurnSpeed()
